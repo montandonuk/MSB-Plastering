@@ -1,5 +1,3 @@
-import Container from '../Container'
-
 // This component now just provides spacing below the Hero's overlapping feature cards
 export default function FeatureCards() {
     return (

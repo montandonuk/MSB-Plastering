@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import Image from 'next/image'
 import { siteConfig } from '@/lib/site'
@@ -48,11 +47,9 @@ const serviceIcons: Record<string, React.ReactNode> = {
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     const [openSection, setOpenSection] = useState<string | null>(null)
-    const [mounted, setMounted] = useState(false)
 
     // Lock body scroll when menu is open
     useEffect(() => {
-        setMounted(true)
         if (isOpen) {
             document.body.style.overflow = 'hidden'
         } else {

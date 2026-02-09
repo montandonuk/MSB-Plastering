@@ -9,7 +9,16 @@ export const metadata: Metadata = {
     description: `Professional plastering and decorating services including skimming, rendering, repairs, and painting in ${siteConfig.baseLocation}.`,
 }
 
-const serviceDetails = {
+type ServiceSlug = typeof siteConfig.services[number]['slug']
+
+interface ServiceDetail {
+    fullDesc: string
+    forWho: string[]
+    typical: string[]
+    faq: Array<{ q: string; a: string }>
+}
+
+const serviceDetails: Record<ServiceSlug, ServiceDetail> = {
     plastering: {
         fullDesc: 'Whether you need a fresh skim on new plasterboard or a re-skim over old, tired walls, we deliver smooth, lasting finishes every time. Perfect for new builds, renovations, and refreshing existing rooms.',
         forWho: ['Homeowners renovating', 'Landlords preparing properties', 'Builders needing a reliable finish'],
@@ -83,7 +92,7 @@ export default function ServicesPage() {
                 <Container>
                     <div className="space-y-16 md:space-y-24">
                         {siteConfig.services.map((service, index) => {
-                            const details = serviceDetails[service.slug as keyof typeof serviceDetails]
+                            const details = serviceDetails[service.slug]
                             return (
                                 <div
                                     key={service.slug}

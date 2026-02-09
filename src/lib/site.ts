@@ -144,8 +144,8 @@ export const siteConfig = {
 
     // Social links (placeholders)
     socialLinks: {
-        facebook: "https://facebook.com/msbplastering",
-        instagram: "https://instagram.com/msbplastering",
+        facebook: "#",
+        instagram: "#",
     },
 
     // Feature cards for homepage

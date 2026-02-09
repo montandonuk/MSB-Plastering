@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// In-memory storage for demo purposes
-// TODO: Wire up to email provider (Resend, Nodemailer, etc.) using environment variables:
-// - RESEND_API_KEY or SMTP_HOST, SMTP_USER, SMTP_PASS
-// - CONTACT_EMAIL_TO (recipient email address)
-const submissions: Array<{
+interface ContactSubmission {
     id: string
     timestamp: string
     name: string
@@ -13,14 +9,21 @@ const submissions: Array<{
     postcode: string
     service: string
     message: string
-}> = []
+}
+
+const CONTACT_WEBHOOK_URL = process.env.CONTACT_WEBHOOK_URL
+const CONTACT_WEBHOOK_TOKEN = process.env.CONTACT_WEBHOOK_TOKEN
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
 
-        // Basic validation
-        const { name, phone, email, message } = body
+        const name = typeof body.name === 'string' ? body.name.trim() : ''
+        const phone = typeof body.phone === 'string' ? body.phone.trim() : ''
+        const email = typeof body.email === 'string' ? body.email.trim() : ''
+        const message = typeof body.message === 'string' ? body.message.trim() : ''
+        const postcode = typeof body.postcode === 'string' ? body.postcode.trim() : ''
+        const service = typeof body.service === 'string' ? body.service.trim() : ''
 
         if (!name || !phone || !email || !message) {
             return NextResponse.json(
@@ -38,33 +41,44 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        // Store submission (in production, send email instead)
-        const submission = {
+        const submission: ContactSubmission = {
             id: crypto.randomUUID(),
             timestamp: new Date().toISOString(),
-            name: body.name,
-            phone: body.phone,
-            email: body.email,
-            postcode: body.postcode || '',
-            service: body.service || '',
-            message: body.message,
+            name,
+            phone,
+            email,
+            postcode,
+            service,
+            message,
         }
 
-        submissions.push(submission)
+        if (!CONTACT_WEBHOOK_URL) {
+            return NextResponse.json(
+                { error: 'Enquiry delivery is not configured. Please call us directly.' },
+                { status: 503 }
+            )
+        }
 
-        // Log for development (remove in production)
-        console.log('New contact form submission:', submission)
+        const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+        }
 
-        // TODO: Send email using Resend or Nodemailer
-        // Example with Resend:
-        // import { Resend } from 'resend'
-        // const resend = new Resend(process.env.RESEND_API_KEY)
-        // await resend.emails.send({
-        //   from: 'noreply@msbplastering.co.uk',
-        //   to: process.env.CONTACT_EMAIL_TO,
-        //   subject: `New enquiry from ${name}`,
-        //   html: `<p>Name: ${name}</p><p>Phone: ${phone}</p>...`,
-        // })
+        if (CONTACT_WEBHOOK_TOKEN) {
+            headers.Authorization = `Bearer ${CONTACT_WEBHOOK_TOKEN}`
+        }
+
+        const webhookResponse = await fetch(CONTACT_WEBHOOK_URL, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(submission),
+        })
+
+        if (!webhookResponse.ok) {
+            return NextResponse.json(
+                { error: 'Unable to deliver enquiry right now. Please call us directly.' },
+                { status: 502 }
+            )
+        }
 
         return NextResponse.json(
             { success: true, message: 'Form submitted successfully' },

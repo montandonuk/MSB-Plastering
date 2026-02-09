@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { siteConfig } from '@/lib/site'
 import Container from '@/components/Container'
 import Button from '@/components/Button'

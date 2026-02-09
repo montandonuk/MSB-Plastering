@@ -44,7 +44,7 @@ module.exports = {
                 },
             },
             fontFamily: {
-                sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+                sans: ['system-ui', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
             },
             borderRadius: {
                 '4xl': '2rem',
