@@ -123,7 +123,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             <button
                 type="button"
                 className="absolute inset-0 bg-brand-charcoal/55 backdrop-blur-sm"
-                onClick={closeMenu}
+                onClick={() => closeMenu()}
                 aria-label="Close menu backdrop"
             />
 
@@ -148,7 +148,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                             ref={closeButtonRef}
                             type="button"
                             className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-200 text-neutral-700 hover:border-brand-orange hover:text-brand-orange transition-colors"
-                            onClick={closeMenu}
+                            onClick={() => closeMenu()}
                             aria-label="Close menu"
                         >
                             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
