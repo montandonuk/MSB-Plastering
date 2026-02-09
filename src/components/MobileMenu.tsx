@@ -50,18 +50,25 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     const pathname = usePathname()
     const closeButtonRef = useRef<HTMLButtonElement | null>(null)
     const previousPathnameRef = useRef(pathname)
+    const scrollYRef = useRef(0)
+    const shouldRestoreScrollRef = useRef(true)
     const [openSection, setOpenSection] = useState<string | null>(null)
-    const closeMenu = useCallback(() => {
+    const closeMenu = useCallback((preserveScroll = true) => {
+        shouldRestoreScrollRef.current = preserveScroll
         setOpenSection(null)
         onClose()
+        if (!preserveScroll) {
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+        }
     }, [onClose])
 
     useEffect(() => {
         if (!isOpen) return
 
-        const scrollY = window.scrollY
+        scrollYRef.current = window.scrollY
+        shouldRestoreScrollRef.current = true
         document.body.style.position = 'fixed'
-        document.body.style.top = `-${scrollY}px`
+        document.body.style.top = `-${scrollYRef.current}px`
         document.body.style.left = '0'
         document.body.style.right = '0'
         document.body.style.width = '100%'
@@ -84,7 +91,9 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             document.body.style.right = ''
             document.body.style.width = ''
             document.body.style.overflow = ''
-            window.scrollTo(0, scrollY)
+            if (shouldRestoreScrollRef.current) {
+                window.scrollTo(0, scrollYRef.current)
+            }
         }
     }, [isOpen, closeMenu])
 
@@ -95,7 +104,9 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         }
 
         if (previousPathnameRef.current !== pathname) {
+            shouldRestoreScrollRef.current = false
             onClose()
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
         }
 
         previousPathnameRef.current = pathname
@@ -124,7 +135,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             >
                 <div className="flex h-full flex-col">
                     <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
-                        <Link href="/" className="flex items-center" onClick={closeMenu}>
+                        <Link href="/" className="flex items-center" onClick={() => closeMenu(false)}>
                             <Image
                                 src="/brand/MSB Logo-updated.png"
                                 alt={`${siteConfig.businessName} logo`}
@@ -151,14 +162,14 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                             <Link
                                 href="/"
                                 className="block rounded-xl px-4 py-3.5 text-base font-semibold text-neutral-900 hover:bg-neutral-50 transition-colors"
-                                onClick={closeMenu}
+                                onClick={() => closeMenu(false)}
                             >
                                 Home
                             </Link>
                             <Link
                                 href="/contact"
                                 className="block rounded-xl bg-brand-charcoal px-4 py-3.5 text-base font-semibold text-white hover:bg-brand-charcoal/90 transition-colors"
-                                onClick={closeMenu}
+                                onClick={() => closeMenu(false)}
                             >
                                 Contact
                             </Link>
@@ -186,9 +197,9 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                         {siteConfig.services.map((service) => (
                                             <Link
                                                 key={service.slug}
-                                                href={`/services#${service.slug}`}
+                                                href={`/services/${service.slug}`}
                                                 className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors"
-                                                onClick={closeMenu}
+                                                onClick={() => closeMenu(false)}
                                             >
                                                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-orange/10 text-brand-orange">
                                                     {serviceIcons[service.slug]}
@@ -220,10 +231,10 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                 </button>
                                 <div className={`overflow-hidden transition-all duration-300 ${openSection === 'work' ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}>
                                     <div className="space-y-1 border-t border-neutral-100 px-2 pb-3 pt-2">
-                                        <Link href="/projects" className="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors" onClick={closeMenu}>
+                                        <Link href="/projects" className="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors" onClick={() => closeMenu(false)}>
                                             Projects
                                         </Link>
-                                        <Link href="/reviews" className="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors" onClick={closeMenu}>
+                                        <Link href="/reviews" className="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors" onClick={() => closeMenu(false)}>
                                             Reviews
                                         </Link>
                                     </div>
@@ -250,10 +261,10 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                 </button>
                                 <div className={`overflow-hidden transition-all duration-300 ${openSection === 'about' ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}>
                                     <div className="space-y-1 border-t border-neutral-100 px-2 pb-3 pt-2">
-                                        <Link href="/about" className="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors" onClick={closeMenu}>
+                                        <Link href="/about" className="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors" onClick={() => closeMenu(false)}>
                                             About Us
                                         </Link>
-                                        <Link href="/areas" className="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors" onClick={closeMenu}>
+                                        <Link href="/areas" className="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors" onClick={() => closeMenu(false)}>
                                             Areas We Cover
                                         </Link>
                                     </div>
@@ -272,7 +283,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                             </svg>
                             {siteConfig.phone}
                         </a>
-                        <Button href="/contact" className="w-full justify-center" onClick={closeMenu}>
+                        <Button href="/contact" className="w-full justify-center" onClick={() => closeMenu(false)}>
                             {siteConfig.primaryCtaLabel}
                         </Button>
                     </div>

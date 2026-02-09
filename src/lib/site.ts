@@ -82,7 +82,7 @@ export const siteConfig = {
             slug: "tonbridge",
             title: "Plasterer in Tonbridge",
             metaDescription: "Professional plastering services in Tonbridge. Skimming, rendering, and painting for homes and businesses.",
-            intro: "Local plasterers serving Tonbridge and surrounding villages. We deliver smooth finishes for extensions, loft conversions, and refreshments.",
+            intro: "Local plasterers serving Tonbridge and surrounding villages. We deliver smooth finishes for extensions, loft conversions, and refurbishments.",
         },
         {
             name: "Sevenoaks",
@@ -131,7 +131,7 @@ export const siteConfig = {
             slug: "hastings",
             title: "Plasterer in Hastings",
             metaDescription: "Plastering services in Hastings and St Leonards. External rendering and internal skimming.",
-            intro: "Coastal plastering specialists in Hastings. from sea-front rendering to internal renovation work.",
+            intro: "Coastal plastering specialists in Hastings, from seafront rendering to internal renovation work.",
         },
         {
             name: "Brighton & Hove",

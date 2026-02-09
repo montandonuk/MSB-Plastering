@@ -52,7 +52,7 @@ export default function ServicesSection() {
                     {siteConfig.services.map((service) => (
                         <Link
                             key={service.slug}
-                            href={`/services#${service.slug}`}
+                            href={`/services/${service.slug}`}
                             className="group bg-white rounded-2xl border border-neutral-100 p-6 md:p-8 shadow-sm hover:shadow-card hover:-translate-y-1 transition-all duration-300"
                         >
                             <div className="inline-flex items-center justify-center h-14 w-14 rounded-xl bg-brand-cream text-brand-orange mb-4 group-hover:bg-brand-orange group-hover:text-white transition-colors">

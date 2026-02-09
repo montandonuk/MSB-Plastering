@@ -118,7 +118,7 @@ export default function AboutPage() {
                             ))}
                         </div>
                         <p className="text-sm text-neutral-500 mb-8">
-                            Somewhere else? Just ask – we travel to where the work is.
+                            Somewhere else? Just ask - we travel to where the work is.
                         </p>
                         <Button href="/contact">
                             {siteConfig.primaryCtaLabel}

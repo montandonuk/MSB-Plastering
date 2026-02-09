@@ -113,7 +113,7 @@ export default function Footer() {
                 {/* Copyright */}
                 <div className="border-t border-white/10 py-6">
                     <p className="text-center text-xs text-neutral-500">
-                        © {currentYear} {siteConfig.businessName}. All rights reserved.
+                        &copy; {currentYear} {siteConfig.businessName}. All rights reserved.
                     </p>
                     <p className="mt-2 text-center text-xs text-neutral-500">
                         Website built by{' '}

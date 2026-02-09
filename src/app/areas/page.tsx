@@ -7,7 +7,7 @@ import { CtaBanner } from '@/components/sections'
 
 export const metadata: Metadata = {
     title: `Areas We Cover | ${siteConfig.businessName}`,
-    description: `${siteConfig.businessName} covers ${siteConfig.baseLocation}, Kent, and East Sussex including Brighton.`,
+    description: `${siteConfig.businessName} covers Tunbridge Wells, wider Kent, and East Sussex including Brighton.`,
 }
 
 export default function AreasPage() {

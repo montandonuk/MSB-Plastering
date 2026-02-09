@@ -182,7 +182,7 @@ export default function Header() {
                                             {siteConfig.services.map((service) => (
                                                 <Link
                                                     key={service.slug}
-                                                    href={`/services#${service.slug}`}
+                                                    href={`/services/${service.slug}`}
                                                     className="group flex items-start gap-4 p-4 rounded-xl hover:bg-brand-cream transition-all duration-200"
                                                 >
                                                     <span className="flex-shrink-0 w-12 h-12 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center group-hover:bg-brand-orange group-hover:text-white transition-all duration-200">
@@ -302,7 +302,7 @@ export default function Header() {
                                             </svg>
                                         </div>
                                         <p className="text-base font-semibold text-neutral-900 group-hover:text-brand-orange transition-colors">Areas We Cover</p>
-                                        <p className="text-sm text-neutral-500 mt-1">Tunbridge Wells, Kent, and East Sussex.</p>
+                                        <p className="text-sm text-neutral-500 mt-1">Tunbridge Wells, wider Kent, and East Sussex.</p>
                                     </Link>
                                 </div>
                             </div>

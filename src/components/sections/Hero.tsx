@@ -33,13 +33,6 @@ export default function Hero() {
 
             <Container className="relative">
                 <div className="pb-14 pt-16 md:pb-24 md:pt-32 lg:pb-28 lg:pt-40">
-                    {/* Badge */}
-                    <div className="mb-6 flex justify-center">
-                        <span className="inline-flex max-w-full items-center rounded-full bg-white/10 px-3 py-1.5 text-center text-xs font-medium text-white/90 ring-1 ring-inset ring-white/20 sm:px-4 sm:text-sm">
-                            Plastering and decorating in {siteConfig.baseLocation} and across Kent
-                        </span>
-                    </div>
-
                     {/* Heading */}
                     <h1 className="mx-auto max-w-4xl text-center text-3xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
                         {siteConfig.businessName}

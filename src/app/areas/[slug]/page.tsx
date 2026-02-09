@@ -140,7 +140,7 @@ export default async function LocationPage({ params }: Props) {
                                     {service.shortDesc}
                                 </p>
                                 <Link
-                                    href={`/services#${service.slug}`}
+                                    href={`/services/${service.slug}`}
                                     className="text-sm font-medium text-brand-orange hover:underline"
                                 >
                                     Learn more &rarr;
