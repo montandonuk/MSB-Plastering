@@ -115,6 +115,18 @@ export default function Footer() {
                     <p className="text-center text-xs text-neutral-500">
                         © {currentYear} {siteConfig.businessName}. All rights reserved.
                     </p>
+                    <p className="mt-2 text-center text-xs text-neutral-500">
+                        Website built by{' '}
+                        <a
+                            href="https://montandon.co.uk/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-neutral-400 hover:text-brand-orange transition-colors"
+                        >
+                            Montandon
+                        </a>
+                        .
+                    </p>
                 </div>
             </Container>
         </footer>

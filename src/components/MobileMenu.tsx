@@ -1,6 +1,8 @@
-'use client'
+﻿'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { siteConfig } from '@/lib/site'
@@ -11,7 +13,6 @@ interface MobileMenuProps {
     onClose: () => void
 }
 
-// Service icons duplicated from Header.tsx for now
 const serviceIcons: Record<string, React.ReactNode> = {
     plastering: (
         <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -46,198 +47,238 @@ const serviceIcons: Record<string, React.ReactNode> = {
 }
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+    const pathname = usePathname()
+    const closeButtonRef = useRef<HTMLButtonElement | null>(null)
+    const previousPathnameRef = useRef(pathname)
     const [openSection, setOpenSection] = useState<string | null>(null)
+    const closeMenu = useCallback(() => {
+        setOpenSection(null)
+        onClose()
+    }, [onClose])
 
-    // Lock body scroll when menu is open
     useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden'
-        } else {
-            document.body.style.overflow = 'unset'
+        if (!isOpen) return
+
+        const scrollY = window.scrollY
+        document.body.style.position = 'fixed'
+        document.body.style.top = `-${scrollY}px`
+        document.body.style.left = '0'
+        document.body.style.right = '0'
+        document.body.style.width = '100%'
+        document.body.style.overflow = 'hidden'
+        closeButtonRef.current?.focus()
+
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                closeMenu()
+            }
         }
+
+        window.addEventListener('keydown', onKeyDown)
+
         return () => {
-            document.body.style.overflow = 'unset'
+            window.removeEventListener('keydown', onKeyDown)
+            document.body.style.position = ''
+            document.body.style.top = ''
+            document.body.style.left = ''
+            document.body.style.right = ''
+            document.body.style.width = ''
+            document.body.style.overflow = ''
+            window.scrollTo(0, scrollY)
         }
-    }, [isOpen])
+    }, [isOpen, closeMenu])
+
+    useEffect(() => {
+        if (!isOpen) {
+            previousPathnameRef.current = pathname
+            return
+        }
+
+        if (previousPathnameRef.current !== pathname) {
+            onClose()
+        }
+
+        previousPathnameRef.current = pathname
+    }, [pathname, isOpen, onClose])
 
     const toggleSection = (section: string) => {
-        setOpenSection(openSection === section ? null : section)
+        setOpenSection((prev) => (prev === section ? null : section))
     }
 
     if (!isOpen) return null
 
-    return (
-        <div className="lg:hidden fixed inset-0 z-50">
-            {/* Backdrop */}
-            <div
-                className="absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity"
-                onClick={onClose}
-                aria-hidden="true"
+    return createPortal(
+        <div id="mobile-menu" className="fixed inset-0 z-[70] lg:hidden">
+            <button
+                type="button"
+                className="absolute inset-0 bg-brand-charcoal/55 backdrop-blur-sm"
+                onClick={closeMenu}
+                aria-label="Close menu backdrop"
             />
 
-            {/* Menu Panel */}
-            <div className="absolute inset-y-0 right-0 w-full max-w-sm bg-white shadow-xl flex flex-col h-full animate-in slide-in-from-right duration-300">
-                <div className="flex items-center justify-between p-6 border-b border-neutral-100 flex-shrink-0">
-                    <Link href="/" onClick={onClose}>
-                        <Image
-                            src="/brand/MSB Logo-updated.png"
-                            alt={`${siteConfig.businessName} logo`}
-                            width={160}
-                            height={53}
-                            className="h-12 w-auto"
-                        />
-                    </Link>
-                    <button
-                        type="button"
-                        className="-m-2.5 rounded-md p-2.5 text-neutral-700 hover:bg-neutral-100 transition-colors"
-                        onClick={onClose}
-                        aria-label="Close menu"
-                    >
-                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-
-                <div className="flex-1 overflow-y-auto p-6">
-                    <div className="space-y-2">
-                        {/* Home Link */}
-                        <Link
-                            href="/"
-                            className="block px-4 py-3 text-base font-semibold text-neutral-900 rounded-lg hover:bg-neutral-50 transition-colors"
-                            onClick={onClose}
-                        >
-                            Home
+            <aside
+                role="dialog"
+                aria-modal="true"
+                aria-label="Main menu"
+                className="absolute inset-y-0 right-0 w-[88%] max-w-sm border-l border-neutral-200 bg-white shadow-2xl"
+            >
+                <div className="flex h-full flex-col">
+                    <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
+                        <Link href="/" className="flex items-center" onClick={closeMenu}>
+                            <Image
+                                src="/brand/MSB Logo-updated.png"
+                                alt={`${siteConfig.businessName} logo`}
+                                width={160}
+                                height={53}
+                                className="h-10 w-auto"
+                            />
                         </Link>
+                        <button
+                            ref={closeButtonRef}
+                            type="button"
+                            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-200 text-neutral-700 hover:border-brand-orange hover:text-brand-orange transition-colors"
+                            onClick={closeMenu}
+                            aria-label="Close menu"
+                        >
+                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
 
-                        {/* Services Accordion */}
-                        <div>
-                            <button
-                                onClick={() => toggleSection('services')}
-                                className="flex items-center justify-between w-full px-4 py-3 text-base font-semibold text-neutral-900 rounded-lg hover:bg-neutral-50 transition-colors"
+                    <div className="flex-1 overflow-y-auto px-4 py-5">
+                        <nav className="space-y-2" aria-label="Mobile navigation">
+                            <Link
+                                href="/"
+                                className="block rounded-xl px-4 py-3.5 text-base font-semibold text-neutral-900 hover:bg-neutral-50 transition-colors"
+                                onClick={closeMenu}
                             >
-                                <span>Services</span>
-                                <svg
-                                    className={`h-5 w-5 text-neutral-500 transition-transform duration-200 ${openSection === 'services' ? 'rotate-180' : ''}`}
-                                    fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"
+                                Home
+                            </Link>
+                            <Link
+                                href="/contact"
+                                className="block rounded-xl bg-brand-charcoal px-4 py-3.5 text-base font-semibold text-white hover:bg-brand-charcoal/90 transition-colors"
+                                onClick={closeMenu}
+                            >
+                                Contact
+                            </Link>
+
+                            <div className="rounded-xl border border-neutral-200 bg-white">
+                                <button
+                                    type="button"
+                                    onClick={() => toggleSection('services')}
+                                    className="flex w-full items-center justify-between px-4 py-3.5 text-base font-semibold text-neutral-900"
+                                    aria-expanded={openSection === 'services'}
                                 >
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                </svg>
-                            </button>
-                            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${openSection === 'services' ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <div className="px-4 pb-4 space-y-1 pt-1">
-                                    {siteConfig.services.map((service) => (
-                                        <Link
-                                            key={service.slug}
-                                            href={`/services#${service.slug}`}
-                                            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-brand-cream hover:text-brand-orange transition-colors"
-                                            onClick={onClose}
-                                        >
-                                            <span className="w-8 h-8 rounded-lg bg-brand-orange/10 text-brand-orange flex items-center justify-center flex-shrink-0">
-                                                {serviceIcons[service.slug]}
-                                            </span>
-                                            <span className="text-sm font-medium">{service.title}</span>
+                                    <span>Services</span>
+                                    <svg
+                                        className={`h-5 w-5 text-neutral-500 transition-transform duration-200 ${openSection === 'services' ? 'rotate-180' : ''}`}
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="2"
+                                        stroke="currentColor"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </button>
+                                <div className={`overflow-hidden transition-all duration-300 ${openSection === 'services' ? 'max-h-[30rem] opacity-100' : 'max-h-0 opacity-0'}`}>
+                                    <div className="space-y-1 border-t border-neutral-100 px-2 pb-3 pt-2">
+                                        {siteConfig.services.map((service) => (
+                                            <Link
+                                                key={service.slug}
+                                                href={`/services#${service.slug}`}
+                                                className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors"
+                                                onClick={closeMenu}
+                                            >
+                                                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-orange/10 text-brand-orange">
+                                                    {serviceIcons[service.slug]}
+                                                </span>
+                                                {service.title}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="rounded-xl border border-neutral-200 bg-white">
+                                <button
+                                    type="button"
+                                    onClick={() => toggleSection('work')}
+                                    className="flex w-full items-center justify-between px-4 py-3.5 text-base font-semibold text-neutral-900"
+                                    aria-expanded={openSection === 'work'}
+                                >
+                                    <span>Our Work</span>
+                                    <svg
+                                        className={`h-5 w-5 text-neutral-500 transition-transform duration-200 ${openSection === 'work' ? 'rotate-180' : ''}`}
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="2"
+                                        stroke="currentColor"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </button>
+                                <div className={`overflow-hidden transition-all duration-300 ${openSection === 'work' ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                    <div className="space-y-1 border-t border-neutral-100 px-2 pb-3 pt-2">
+                                        <Link href="/projects" className="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors" onClick={closeMenu}>
+                                            Projects
                                         </Link>
-                                    ))}
+                                        <Link href="/reviews" className="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors" onClick={closeMenu}>
+                                            Reviews
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        {/* Our Work Accordion */}
-                        <div>
-                            <button
-                                onClick={() => toggleSection('work')}
-                                className="flex items-center justify-between w-full px-4 py-3 text-base font-semibold text-neutral-900 rounded-lg hover:bg-neutral-50 transition-colors"
-                            >
-                                <span>Our Work</span>
-                                <svg
-                                    className={`h-5 w-5 text-neutral-500 transition-transform duration-200 ${openSection === 'work' ? 'rotate-180' : ''}`}
-                                    fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"
+                            <div className="rounded-xl border border-neutral-200 bg-white">
+                                <button
+                                    type="button"
+                                    onClick={() => toggleSection('about')}
+                                    className="flex w-full items-center justify-between px-4 py-3.5 text-base font-semibold text-neutral-900"
+                                    aria-expanded={openSection === 'about'}
                                 >
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                </svg>
-                            </button>
-                            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${openSection === 'work' ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <div className="px-4 pb-4 space-y-1 pt-1">
-                                    <Link
-                                        href="/projects"
-                                        className="block px-3 py-2.5 rounded-lg text-sm font-medium text-neutral-600 hover:bg-brand-cream hover:text-brand-orange transition-colors"
-                                        onClick={onClose}
+                                    <span>About</span>
+                                    <svg
+                                        className={`h-5 w-5 text-neutral-500 transition-transform duration-200 ${openSection === 'about' ? 'rotate-180' : ''}`}
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="2"
+                                        stroke="currentColor"
                                     >
-                                        Projects
-                                    </Link>
-                                    <Link
-                                        href="/reviews"
-                                        className="block px-3 py-2.5 rounded-lg text-sm font-medium text-neutral-600 hover:bg-brand-cream hover:text-brand-orange transition-colors"
-                                        onClick={onClose}
-                                    >
-                                        Reviews
-                                    </Link>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </button>
+                                <div className={`overflow-hidden transition-all duration-300 ${openSection === 'about' ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                    <div className="space-y-1 border-t border-neutral-100 px-2 pb-3 pt-2">
+                                        <Link href="/about" className="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors" onClick={closeMenu}>
+                                            About Us
+                                        </Link>
+                                        <Link href="/areas" className="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-brand-cream hover:text-brand-orange transition-colors" onClick={closeMenu}>
+                                            Areas We Cover
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </nav>
+                    </div>
 
-                        {/* About Accordion */}
-                        <div>
-                            <button
-                                onClick={() => toggleSection('about')}
-                                className="flex items-center justify-between w-full px-4 py-3 text-base font-semibold text-neutral-900 rounded-lg hover:bg-neutral-50 transition-colors"
-                            >
-                                <span>About</span>
-                                <svg
-                                    className={`h-5 w-5 text-neutral-500 transition-transform duration-200 ${openSection === 'about' ? 'rotate-180' : ''}`}
-                                    fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                </svg>
-                            </button>
-                            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${openSection === 'about' ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <div className="px-4 pb-4 space-y-1 pt-1">
-                                    <Link
-                                        href="/about"
-                                        className="block px-3 py-2.5 rounded-lg text-sm font-medium text-neutral-600 hover:bg-brand-cream hover:text-brand-orange transition-colors"
-                                        onClick={onClose}
-                                    >
-                                        About Us
-                                    </Link>
-                                    <Link
-                                        href="/areas"
-                                        className="block px-3 py-2.5 rounded-lg text-sm font-medium text-neutral-600 hover:bg-brand-cream hover:text-brand-orange transition-colors"
-                                        onClick={onClose}
-                                    >
-                                        Areas We Cover
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Contact Link */}
-                        <Link
-                            href="/contact"
-                            className="block px-4 py-3 text-base font-semibold text-neutral-900 rounded-lg hover:bg-neutral-50 transition-colors"
-                            onClick={onClose}
+                    <div className="border-t border-neutral-100 bg-neutral-50 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4">
+                        <a
+                            href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}
+                            className="mb-3 flex items-center justify-center gap-2 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm font-semibold text-neutral-700 hover:border-brand-orange hover:text-brand-orange transition-colors"
                         >
-                            Contact
-                        </Link>
+                            <svg className="h-5 w-5 text-brand-orange" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                            </svg>
+                            {siteConfig.phone}
+                        </a>
+                        <Button href="/contact" className="w-full justify-center" onClick={closeMenu}>
+                            {siteConfig.primaryCtaLabel}
+                        </Button>
                     </div>
                 </div>
-
-                {/* Footer / CTA */}
-                <div className="p-6 border-t border-neutral-100 bg-neutral-50 flex-shrink-0">
-                    <a
-                        href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}
-                        className="flex items-center justify-center gap-2 text-neutral-700 font-medium mb-4 hover:text-brand-orange transition-colors"
-                    >
-                        <svg className="h-5 w-5 text-brand-orange" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                        </svg>
-                        {siteConfig.phone}
-                    </a>
-                    <Button href="/contact" className="w-full justify-center" onClick={onClose}>
-                        {siteConfig.primaryCtaLabel}
-                    </Button>
-                </div>
-            </div>
-        </div>
+            </aside>
+        </div>,
+        document.body
     )
 }

@@ -1,10 +1,10 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { siteConfig } from '@/lib/site'
 import Container from '../Container'
 
 export default function AreasSection() {
     return (
-        <section className="bg-brand-cream py-16 md:py-24">
+        <section className="bg-brand-cream py-14 md:py-24">
             <Container>
                 <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
                     {/* Content */}
@@ -16,7 +16,7 @@ export default function AreasSection() {
                             Based in {siteConfig.baseLocation}, covering Kent and parts of East Sussex including Brighton. We travel to where the work is.
                         </p>
 
-                        <ul className="grid grid-cols-2 gap-3 mb-8">
+                        <ul className="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
                             {siteConfig.locations.map((area) => (
                                 <li key={area.name} className="flex items-center gap-2 text-neutral-700">
                                     <svg className="h-5 w-5 text-brand-orange flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
@@ -31,12 +31,12 @@ export default function AreasSection() {
                         </ul>
 
                         <p className="text-sm text-neutral-500 italic">
-                            Not listed? Ask anyway – we cover more areas than we can list.
+                            Not listed? Ask anyway - we cover more areas than we can list.
                         </p>
                     </div>
 
                     {/* Map */}
-                    <div className="relative h-80 lg:h-auto lg:min-h-[400px] rounded-2xl overflow-hidden shadow-soft">
+                    <div className="relative h-72 overflow-hidden rounded-2xl shadow-soft lg:h-auto lg:min-h-[400px]">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d80098.19068686795!2d0.2039977!3d51.1342368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47df456c0a2f7029%3A0x96e25ffd32ca49a5!2sRoyal%20Tunbridge%20Wells!5e0!3m2!1sen!2suk!4v1705927199000!5m2!1sen!2suk"
                             width="100%"

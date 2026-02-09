@@ -65,15 +65,15 @@ export default function Header() {
     return (
         <header className="fixed inset-x-0 top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm">
             <Container>
-                <nav className="flex items-center justify-between py-3">
-                    {/* Logo - Larger */}
+                <nav className="flex min-h-[72px] items-center justify-between py-2 md:min-h-[84px] md:py-3">
+                    {/* Logo */}
                     <Link href="/" className="flex items-center">
                         <Image
                             src="/brand/MSB Logo-updated.png"
                             alt={`${siteConfig.businessName} logo`}
                             width={280}
                             height={93}
-                            className="h-20 w-auto"
+                            className="h-11 w-auto sm:h-12 md:h-14 lg:h-20"
                             priority
                         />
                     </Link>
@@ -136,17 +136,30 @@ export default function Header() {
                         </Button>
                     </div>
 
-                    {/* Mobile menu button */}
-                    <button
-                        type="button"
-                        className="lg:hidden -m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-neutral-700"
-                        onClick={() => setMobileMenuOpen(true)}
-                        aria-label="Open main menu"
-                    >
-                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                        </svg>
-                    </button>
+                    {/* Mobile actions */}
+                    <div className="flex items-center gap-2 lg:hidden">
+                        <a
+                            href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}
+                            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-200 text-neutral-700 hover:border-brand-orange hover:text-brand-orange transition-colors"
+                            aria-label={`Call ${siteConfig.businessName}`}
+                        >
+                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                            </svg>
+                        </a>
+                        <button
+                            type="button"
+                            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-200 text-neutral-700 hover:border-brand-orange hover:text-brand-orange transition-colors"
+                            onClick={() => setMobileMenuOpen(true)}
+                            aria-label="Open main menu"
+                            aria-expanded={mobileMenuOpen}
+                            aria-controls="mobile-menu"
+                        >
+                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            </svg>
+                        </button>
+                    </div>
                 </nav>
             </Container>
 

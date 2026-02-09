@@ -13,12 +13,12 @@ const checkItems = [
 
 export default function IntroSection() {
     return (
-        <section className="bg-brand-cream py-16 md:py-24">
+        <section className="bg-brand-cream py-14 md:py-24">
             <Container>
-                <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+                <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
                     {/* Image collage */}
                     <div className="relative">
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <div className="space-y-4">
                                 <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-200">
                                     <Image
@@ -29,7 +29,7 @@ export default function IntroSection() {
                                     />
                                 </div>
                             </div>
-                            <div className="space-y-4 pt-8">
+                            <div className="space-y-4 sm:pt-8">
                                 <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-200">
                                     <Image
                                         src="/images/1.png"
@@ -41,7 +41,7 @@ export default function IntroSection() {
                             </div>
                         </div>
                         {/* Decorative accent */}
-                        <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-brand-orange/20 rounded-full -z-10" />
+                        <div className="absolute -bottom-4 -right-4 hidden h-24 w-24 rounded-full bg-brand-orange/20 sm:block -z-10" />
                     </div>
 
                     {/* Content */}
@@ -49,7 +49,7 @@ export default function IntroSection() {
                         <p className="text-sm font-semibold uppercase tracking-wider text-brand-orange mb-3">
                             Local, reliable, professional
                         </p>
-                        <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-6">
+                        <h2 className="mb-5 text-2xl font-bold text-neutral-900 md:mb-6 md:text-4xl">
                             Professional plasterers in {siteConfig.baseLocation}
                         </h2>
                         <div className="space-y-4 text-neutral-600 mb-8">
