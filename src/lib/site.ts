@@ -66,6 +66,18 @@ export const siteConfig = {
             shortDesc: "Interior painting and decorating. Bundle it with plastering or book standalone.",
             icon: "paintbrush",
         },
+        {
+            title: "External Painting",
+            slug: "external-painting",
+            shortDesc: "Refresh your property's exterior. High-quality masonry painting for protection and curb appeal.",
+            icon: "roller",
+        },
+        {
+            title: "Property Services",
+            slug: "property-services",
+            shortDesc: "General property maintenance, guttering, and repairs to keep your home in top condition.",
+            icon: "hammer",
+        },
     ],
 
     // Locations covered (SEO Pages)

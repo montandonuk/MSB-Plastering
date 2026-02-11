@@ -107,6 +107,32 @@ const serviceFields: Record<ServiceSlug, ServiceFields> = {
             { q: 'Do you do wallpapering?', a: 'Our main focus is painting and finishing. We can recommend a trusted wallpaper specialist if needed.' },
         ],
     },
+    'external-painting': {
+        intro: 'High-quality exterior masonry painting to protect and beautify your home.',
+        fullDesc: 'Protect your property from the elements with professional exterior painting. We use premium masonry paints and proper preparation techniques to ensure a long-lasting, weather-resistant finish that boosts curb appeal.',
+        seoTitle: 'External Painting in Kent | MSB Plastering',
+        seoDescription: 'Professional exterior painting and masonry protection in Tunbridge Wells, Kent, and East Sussex. Long-lasting finishes for homes and businesses.',
+        keywords: ['exterior painting kent', 'masonry painting tunbridge wells', 'house painting service', 'weatherproof wall paint'],
+        forWho: ['Homeowners wanting curb appeal', 'Landlords maintaining exteriors', 'Properties with weather-worn walls'],
+        typical: ['Full exterior painting', 'Masonry painting', 'Window sills and reveals', 'Fence and gate painting'],
+        faq: [
+            { q: 'Do I need scaffolding?', a: 'For higher levels, yes. We can arrange this or work with your preferred scaffolders.' },
+            { q: 'What paint do you use?', a: 'We recommend high-quality trade masonry paints like Dulux Weathershield or Sandtex for long-lasting protection.' },
+        ],
+    },
+    'property-services': {
+        intro: 'General property maintenance and repairs to keep your home in top condition.',
+        fullDesc: 'Beyond plastering and decorating, we offer a range of essential property maintenance services. From gutter cleaning to minor repairs, we help keep your home functioning and looking its best.',
+        seoTitle: 'Property Maintenance Services in Kent | MSB Plastering',
+        seoDescription: 'Reliable property maintenance and repair services in Tunbridge Wells, Kent. Guttering, minor repairs, and general home upkeep.',
+        keywords: ['property maintenance kent', 'handyman services tunbridge wells', 'gutter cleaning service', 'home repairs'],
+        forWho: ['Homeowners with a to-do list', 'Landlords between tenancies', 'Anyone needing reliable help'],
+        typical: ['Gutter clearing and repair', 'Fascia and soffit painting', 'Basic carpentry', 'General maintenance'],
+        faq: [
+            { q: 'Is no job too small?', a: 'We are happy to discuss any property maintenance needs. Just give us a call to check.' },
+            { q: 'Do you do electrical or plumbing work?', a: 'We handle general maintenance. For certified electrical or gas work, we can recommend trusted specialists.' },
+        ],
+    },
 }
 
 export const servicePages: ServicePageData[] = siteConfig.services.map((service) => ({
