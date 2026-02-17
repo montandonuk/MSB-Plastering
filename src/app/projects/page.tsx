@@ -15,7 +15,7 @@ const projects = [
         title: 'Full house re-skim',
         location: 'Tunbridge Wells',
         service: 'Plastering',
-        image: '/images/8.png',
+        image: '/images/598613146_4216189742041288_8670296135861101388_n.jpg',
         description: 'Complete re-skim of a 3-bedroom property preparing it for sale.',
     },
     {
@@ -23,7 +23,7 @@ const projects = [
         title: 'Extension plastering',
         location: 'Sevenoaks',
         service: 'Plastering',
-        image: '/images/4.png',
+        image: '/images/536632710_4102694270057503_7417214988960154890_n.jpg',
         description: 'New plasterboard and skim for a kitchen extension.',
     },
     {
@@ -31,7 +31,7 @@ const projects = [
         title: 'Commercial rendering',
         location: 'Brighton',
         service: 'Rendering',
-        image: '/images/6.png',
+        image: '/images/476166873_3901396096853989_4646321421527471772_n.jpg',
         description: 'External render for a small retail unit.',
     },
     {
@@ -39,7 +39,7 @@ const projects = [
         title: 'Ceiling repairs',
         location: 'Tonbridge',
         service: 'Ceilings',
-        image: '/images/7.png',
+        image: '/images/475813344_3901395610187371_5117658542515461492_n.jpg',
         description: 'Water damage repair and re-skim across multiple rooms.',
     },
     {
@@ -47,7 +47,7 @@ const projects = [
         title: 'Living room renovation',
         location: 'Crowborough',
         service: 'Decorating',
-        image: '/images/10.png',
+        image: '/images/474779548_3901396000187332_802694187972134587_n.jpg',
         description: 'Plastering and decorating package for a period property.',
     },
     {
@@ -55,7 +55,7 @@ const projects = [
         title: 'Rental property refresh',
         location: 'Maidstone',
         service: 'Repairs',
-        image: '/images/2.png',
+        image: '/images/475419189_3901395683520697_2447410075144698555_n.jpg',
         description: 'Patch repairs and painting between tenancies.',
     },
 ]
@@ -118,7 +118,7 @@ export default function ProjectsPage() {
 
                     <div className="mt-12 text-center">
                         <p className="text-neutral-500">
-                            These are placeholder examples. Real project photos coming soon.
+                            A selection of real project photos from recent jobs.
                         </p>
                     </div>
                 </Container>

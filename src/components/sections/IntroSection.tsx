@@ -22,7 +22,7 @@ export default function IntroSection() {
                             <div className="space-y-4">
                                 <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-200">
                                     <Image
-                                        src="/images/3.png"
+                                        src="/images/474763067_3901395796854019_5726163612695669067_n.jpg"
                                         alt="Detailed plastering work"
                                         fill
                                         className="object-cover"
@@ -32,7 +32,7 @@ export default function IntroSection() {
                             <div className="space-y-4 sm:pt-8">
                                 <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-200">
                                     <Image
-                                        src="/images/1.png"
+                                        src="/images/475454310_3901394776854121_513798446218875720_n.jpg"
                                         alt="Professional plasterer at work"
                                         fill
                                         className="object-cover"

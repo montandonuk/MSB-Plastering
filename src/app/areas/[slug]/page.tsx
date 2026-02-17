@@ -108,7 +108,7 @@ export default async function LocationPage({ params }: Props) {
                         </div>
                         <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-neutral-200 shadow-soft">
                             <Image
-                                src="/images/1.png"
+                                src="/images/474779548_3901396000187332_802694187972134587_n.jpg"
                                 alt={`Plastering work in ${location.name}`}
                                 fill
                                 className="object-cover"

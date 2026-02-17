@@ -3,9 +3,9 @@ import Button from '../Button'
 import Container from '../Container'
 
 const projectImages = [
-    { src: '/images/11.png', alt: 'Modern bedroom renovation', location: 'Tunbridge Wells' },
-    { src: '/images/9.png', alt: 'Living room redecoration', location: 'Sevenoaks' },
-    { src: '/images/8.png', alt: 'Feature wall rendering', location: 'Brighton' },
+    { src: '/images/598613146_4216189742041288_8670296135861101388_n.jpg', alt: 'Freshly skimmed interior room', location: 'Tunbridge Wells' },
+    { src: '/images/536632710_4102694270057503_7417214988960154890_n.jpg', alt: 'Plastering in progress on a home renovation', location: 'Sevenoaks' },
+    { src: '/images/476166873_3901396096853989_4646321421527471772_n.jpg', alt: 'Completed plastering finish ready for decorating', location: 'Brighton' },
 ]
 
 export default function ProjectsTeaser() {
