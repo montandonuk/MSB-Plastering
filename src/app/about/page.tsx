@@ -50,8 +50,8 @@ export default function AboutPage() {
                         </div>
                         <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-neutral-200">
                             <Image
-                                src="/images/5.png"
-                                alt="Plastering expert with hawk and trowel"
+                                src="/images/598613146_4216189742041288_8670296135861101388_n.jpg"
+                                alt="MSB Plastering van"
                                 fill
                                 className="object-cover"
                             />
