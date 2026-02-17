@@ -1,13 +1,15 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { siteConfig } from '@/lib/site'
+import { buildPageMetadata } from '@/lib/seo'
 import Container from '@/components/Container'
 import { CtaBanner } from '@/components/sections'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
     title: `Our Projects | ${siteConfig.businessName}`,
     description: `View recent plastering and decorating projects completed by ${siteConfig.businessName} across Kent and Sussex.`,
-}
+    path: '/projects',
+})
 
 const projects = [
     {
@@ -61,8 +63,30 @@ const projects = [
 ]
 
 export default function ProjectsPage() {
+    const projectsSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: 'Recent Plastering Projects',
+        url: `${siteConfig.siteUrl}/projects`,
+        mainEntity: {
+            '@type': 'ItemList',
+            itemListElement: projects.map((project, index) => ({
+                '@type': 'ListItem',
+                position: index + 1,
+                name: project.title,
+                description: project.description,
+                image: `${siteConfig.siteUrl}${project.image}`,
+            })),
+        },
+    }
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsSchema) }}
+            />
+
             {/* Hero */}
             <section className="bg-brand-charcoal text-white py-16 md:py-24">
                 <Container>
@@ -88,6 +112,7 @@ export default function ProjectsPage() {
                                         src={project.image}
                                         alt={project.title}
                                         fill
+                                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />

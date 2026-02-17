@@ -59,6 +59,7 @@ export default function ProjectsTeaser() {
                                 src={image.src}
                                 alt={image.alt}
                                 fill
+                                sizes="(min-width: 768px) 33vw, 100vw"
                                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />

@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
 import { siteConfig } from '@/lib/site'
+import { buildPageMetadata } from '@/lib/seo'
 import Container from '@/components/Container'
 import ContactForm from './ContactForm'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
     title: `Contact Us | ${siteConfig.businessName}`,
     description: `Get in touch with ${siteConfig.businessName} for a free quote. Plastering and decorating services in ${siteConfig.baseLocation}.`,
-}
+    path: '/contact',
+})
 
 export default function ContactPage() {
     return (

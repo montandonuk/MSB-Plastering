@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { siteConfig } from '@/lib/site'
+import { buildPageMetadata } from '@/lib/seo'
 import Container from '@/components/Container'
 import Button from '@/components/Button'
 import { CtaBanner } from '@/components/sections'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
     title: `Areas We Cover | ${siteConfig.businessName}`,
     description: `${siteConfig.businessName} covers Tunbridge Wells, wider Kent, and East Sussex including Brighton.`,
-}
+    path: '/areas',
+})
 
 export default function AreasPage() {
     return (

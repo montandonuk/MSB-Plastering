@@ -2,6 +2,7 @@
 // Update these values to change content across the entire site
 
 export const siteConfig = {
+    siteUrl: "https://msbplastering.co.uk",
     businessName: "MSB Plastering & Decorating Service",
     tagline: "Tidy plastering and decorating, done properly.",
 
@@ -12,6 +13,9 @@ export const siteConfig = {
     // Location
     baseLocation: "Tunbridge Wells, Kent",
     fullAddress: "Tunbridge Wells, Kent, United Kingdom",
+    addressLocality: "Tunbridge Wells",
+    addressRegion: "Kent",
+    addressCountry: "GB",
 
     // CTAs
     primaryCtaLabel: "Request a quote",

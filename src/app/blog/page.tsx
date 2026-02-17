@@ -1,12 +1,18 @@
 import type { Metadata } from 'next'
 import { siteConfig } from '@/lib/site'
+import { buildPageMetadata } from '@/lib/seo'
 import Container from '@/components/Container'
 import Button from '@/components/Button'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
     title: `Blog | ${siteConfig.businessName}`,
     description: `Tips, guides, and updates from ${siteConfig.businessName}.`,
-}
+    path: '/blog',
+    robots: {
+        index: false,
+        follow: false,
+    },
+})
 
 export default function BlogPage() {
     return (

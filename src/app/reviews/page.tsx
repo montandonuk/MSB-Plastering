@@ -1,13 +1,15 @@
 import type { Metadata } from 'next'
 import { siteConfig } from '@/lib/site'
+import { buildPageMetadata } from '@/lib/seo'
 import Container from '@/components/Container'
 import Button from '@/components/Button'
 import { CtaBanner } from '@/components/sections'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
     title: `Customer Reviews | ${siteConfig.businessName}`,
-    description: `Read what customers say about ${siteConfig.businessName}. Real feedback from real customers across Kent and Sussex.`,
-}
+    description: `Read what customers say about ${siteConfig.businessName}. Real feedback from customers across Kent and Sussex.`,
+    path: '/reviews',
+})
 
 export default function ReviewsPage() {
     return (
@@ -55,7 +57,7 @@ export default function ReviewsPage() {
 
                     <div className="mt-12 text-center">
                         <p className="text-sm text-neutral-500 mb-6">
-                            These are placeholder reviews. Real customer testimonials coming soon.
+                            A selection of customer feedback from recent projects.
                         </p>
                         <Button href="/contact">
                             {siteConfig.primaryCtaLabel}

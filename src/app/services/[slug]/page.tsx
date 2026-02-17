@@ -2,12 +2,11 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { siteConfig } from '@/lib/site'
+import { buildPageMetadata, normalizePhoneForSchema } from '@/lib/seo'
 import { getServiceBySlug, servicePages } from '@/lib/services'
 import Container from '@/components/Container'
 import Button from '@/components/Button'
 import { CtaBanner } from '@/components/sections'
-
-const siteUrl = 'https://msbplastering.co.uk'
 
 interface Props {
     params: Promise<{
@@ -29,21 +28,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         return {}
     }
 
-    return {
+    return buildPageMetadata({
         title: service.seoTitle,
         description: service.seoDescription,
         keywords: service.keywords,
-        alternates: {
-            canonical: `/services/${service.slug}`,
-        },
-        openGraph: {
-            title: service.seoTitle,
-            description: service.seoDescription,
-            url: `${siteUrl}/services/${service.slug}`,
-            type: 'article',
-            locale: 'en_GB',
-        },
-    }
+        path: `/services/${service.slug}`,
+    })
 }
 
 export default async function ServiceDetailPage({ params }: Props) {
@@ -75,11 +65,11 @@ export default async function ServiceDetailPage({ params }: Props) {
         provider: {
             '@type': 'LocalBusiness',
             name: siteConfig.businessName,
-            telephone: siteConfig.phone,
+            telephone: normalizePhoneForSchema(siteConfig.phone),
             areaServed: ['Tunbridge Wells', 'Kent', 'East Sussex'],
         },
         areaServed: ['Tunbridge Wells', 'Kent', 'East Sussex'],
-        url: `${siteUrl}/services/${service.slug}`,
+        url: `${siteConfig.siteUrl}/services/${service.slug}`,
     }
 
     return (

@@ -1,16 +1,18 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { siteConfig } from '@/lib/site'
+import { buildPageMetadata } from '@/lib/seo'
 import { servicePages } from '@/lib/services'
 import Container from '@/components/Container'
 import Button from '@/components/Button'
 import { CtaBanner } from '@/components/sections'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
     title: `Our Services | ${siteConfig.businessName}`,
     description: `Explore plastering, repairs, dry lining, rendering, ceiling work, and decorating services from ${siteConfig.businessName} across Tunbridge Wells, Kent, and East Sussex.`,
+    path: '/services',
     keywords: ['plastering services', 'decorating services', 'rendering services', 'tunbridge wells plasterer', 'kent plastering'],
-}
+})
 
 export default function ServicesPage() {
     return (

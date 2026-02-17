@@ -2,14 +2,16 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { siteConfig } from '@/lib/site'
+import { buildPageMetadata } from '@/lib/seo'
 import Container from '@/components/Container'
 import Button from '@/components/Button'
 import { CtaBanner } from '@/components/sections'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
     title: `About Us | ${siteConfig.businessName}`,
     description: `Learn about ${siteConfig.businessName}. Professional plastering and decorating in ${siteConfig.baseLocation} and surrounding areas.`,
-}
+    path: '/about',
+})
 
 export default function AboutPage() {
     return (
@@ -53,6 +55,7 @@ export default function AboutPage() {
                                 src="/images/598613146_4216189742041288_8670296135861101388_n.jpg"
                                 alt="MSB Plastering van"
                                 fill
+                                sizes="(min-width: 1024px) 50vw, 100vw"
                                 className="object-cover"
                             />
                         </div>

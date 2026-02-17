@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { siteConfig } from '@/lib/site'
+import { buildPageMetadata } from '@/lib/seo'
 import Container from '@/components/Container'
 import Button from '@/components/Button'
 import { CtaBanner } from '@/components/sections'
@@ -27,10 +28,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         return {}
     }
 
-    return {
+    return buildPageMetadata({
         title: location.title,
         description: location.metaDescription,
-    }
+        path: `/areas/${location.slug}`,
+        keywords: [
+            `plasterer ${location.name.toLowerCase()}`,
+            `${location.name.toLowerCase()} plastering`,
+            'plastering kent',
+            'decorating services',
+        ],
+    })
 }
 
 export default async function LocationPage({ params }: Props) {
@@ -111,6 +119,7 @@ export default async function LocationPage({ params }: Props) {
                                 src="/images/474779548_3901396000187332_802694187972134587_n.jpg"
                                 alt={`Plastering work in ${location.name}`}
                                 fill
+                                sizes="(min-width: 1024px) 50vw, 100vw"
                                 className="object-cover"
                             />
                         </div>

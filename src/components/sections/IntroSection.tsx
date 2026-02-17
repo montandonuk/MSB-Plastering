@@ -25,6 +25,7 @@ export default function IntroSection() {
                                         src="/images/3.png"
                                         alt="Detailed plastering work"
                                         fill
+                                        sizes="(min-width: 1024px) 24vw, (min-width: 640px) 50vw, 100vw"
                                         className="object-cover"
                                     />
                                 </div>
@@ -35,6 +36,7 @@ export default function IntroSection() {
                                         src="/images/1.png"
                                         alt="Professional plasterer at work"
                                         fill
+                                        sizes="(min-width: 1024px) 24vw, (min-width: 640px) 50vw, 100vw"
                                         className="object-cover"
                                     />
                                 </div>
