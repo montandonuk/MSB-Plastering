@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
         // Email content
         const mailOptions = {
             from: `"MSB Website" <${process.env.SMTP_USER}>`,
-            to: 'web@msbplastering.com',
+            to: 'msb4545@outlook.com',
             replyTo: email, // Allow replying to the customer
             subject: `New Website Enquiry from ${name}`,
             text: `
