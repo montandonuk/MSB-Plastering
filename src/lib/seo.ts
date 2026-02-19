@@ -26,7 +26,7 @@ export function buildPageMetadata({
         keywords,
         robots,
         alternates: {
-            canonical: path,
+            canonical: absoluteUrl,
         },
         openGraph: {
             title,

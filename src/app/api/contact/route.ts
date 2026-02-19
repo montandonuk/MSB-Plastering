@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 
-interface ContactSubmission {
-    name: string
-    phone: string
-    email: string
-    postcode: string
-    service: string
-    message: string
+export const runtime = 'nodejs'
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+function escapeHtml(value: string) {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
 }
 
 export async function POST(request: NextRequest) {
@@ -28,8 +32,6 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        // Basic email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         if (!emailRegex.test(email)) {
             return NextResponse.json(
                 { error: 'Please provide a valid email address' },
@@ -37,30 +39,43 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        const host = process.env.SMTP_HOST || 'smtp.stackmail.com';
-        const port = Number(process.env.SMTP_PORT) || 465;
-        const isSecure = port === 465;
+        const host = process.env.SMTP_HOST?.trim() || 'smtp.stackmail.com'
+        const port = Number(process.env.SMTP_PORT || 465)
+        const isSecure = port === 465
+        const smtpUser = process.env.SMTP_USER?.trim()
+        const smtpPass = process.env.SMTP_PASS?.trim()
+        const toAddress = process.env.CONTACT_TO_EMAIL?.trim() || 'msb4545@outlook.com'
 
-        console.log('SMTP Config:', { host, port, user: process.env.SMTP_USER });
+        if (!smtpUser || !smtpPass || !Number.isFinite(port)) {
+            console.error('Contact form misconfigured: missing/invalid SMTP environment variables')
+            return NextResponse.json(
+                { error: 'Contact service is temporarily unavailable. Please call us directly.' },
+                { status: 503 }
+            )
+        }
+
+        const safeName = escapeHtml(name)
+        const safeEmail = escapeHtml(email)
+        const safePhone = escapeHtml(phone)
+        const safePhoneHref = phone.replace(/[^\d+]/g, '')
+        const safePostcode = escapeHtml(postcode)
+        const safeService = escapeHtml(service || 'Not specified')
+        const safeMessageHtml = escapeHtml(message).replace(/\n/g, '<br>')
 
         const transporter = nodemailer.createTransport({
             host,
             port,
             secure: isSecure,
             auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS,
+                user: smtpUser,
+                pass: smtpPass,
             },
-            tls: {
-                rejectUnauthorized: false
-            }
         })
 
-        // Email content
         const mailOptions = {
-            from: `"MSB Website" <${process.env.SMTP_USER}>`,
-            to: 'msb4545@outlook.com',
-            replyTo: email, // Allow replying to the customer
+            from: `"MSB Website" <${smtpUser}>`,
+            to: toAddress,
+            replyTo: email,
             subject: `New Website Enquiry from ${name}`,
             text: `
 Name: ${name}
@@ -106,34 +121,34 @@ ${message}
                 
                 <div class="field">
                     <span class="label">Name</span>
-                    <div class="value">${name}</div>
+                    <div class="value">${safeName}</div>
                 </div>
 
                 <div class="field">
                     <span class="label">Service Requested</span>
-                    <div class="value" style="color: #F57605; font-weight: 700;">${service}</div>
+                    <div class="value" style="color: #F57605; font-weight: 700;">${safeService}</div>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="field">
                         <span class="label">Phone</span>
-                        <div class="value"><a href="tel:${phone}">${phone}</a></div>
+                        <div class="value"><a href="tel:${safePhoneHref}">${safePhone}</a></div>
                     </div>
                     <div class="field">
                         <span class="label">Postcode</span>
-                        <div class="value">${postcode}</div>
+                        <div class="value">${safePostcode}</div>
                     </div>
                 </div>
 
                 <div class="field">
                     <span class="label">Email</span>
-                    <div class="value"><a href="mailto:${email}">${email}</a></div>
+                    <div class="value"><a href="mailto:${safeEmail}">${safeEmail}</a></div>
                 </div>
 
                 <div class="field" style="margin-top: 24px;">
                     <span class="label">Message</span>
                     <div class="message-box">
-                        ${message.replace(/\n/g, '<br>')}
+                        ${safeMessageHtml}
                     </div>
                 </div>
             </div>
@@ -148,17 +163,16 @@ ${message}
             `,
         }
 
-        // Send email
         await transporter.sendMail(mailOptions)
 
         return NextResponse.json(
             { success: true, message: 'Form submitted successfully' },
             { status: 200 }
         )
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Contact form error:', error)
         return NextResponse.json(
-            { error: 'Unable to send enquiry. Please try again later.', details: error.message },
+            { error: 'Unable to send enquiry. Please try again later.' },
             { status: 500 }
         )
     }
