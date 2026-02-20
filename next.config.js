@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://msbplastering.co.uk'
+const configuredSiteUrl = process.env.SITE_URL || 'https://msbplastering.com'
 const canonicalOrigin = configuredSiteUrl.replace(/\/+$/, '')
 const canonicalHost = new URL(canonicalOrigin).host
 const alternateHost = canonicalHost.startsWith('www.')

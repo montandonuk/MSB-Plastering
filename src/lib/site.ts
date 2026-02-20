@@ -1,8 +1,8 @@
 // Site configuration - single source of truth for all site data
 // Update these values to change content across the entire site
 
-const defaultSiteUrl = "https://msbplastering.co.uk"
-const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim()
+const defaultSiteUrl = "https://msbplastering.com"
+const configuredSiteUrl = process.env.SITE_URL?.trim()
 const normalizedSiteUrl = (configuredSiteUrl || defaultSiteUrl).replace(/\/+$/, "")
 
 export const siteConfig = {
