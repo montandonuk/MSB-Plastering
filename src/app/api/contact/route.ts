@@ -4,6 +4,12 @@ import nodemailer from 'nodemailer'
 export const runtime = 'nodejs'
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const defaultSmtpHost = 'smtp.stackmail.com'
+
+type MailError = {
+    code?: string
+    reason?: string
+}
 
 function escapeHtml(value: string) {
     return value
@@ -12,6 +18,13 @@ function escapeHtml(value: string) {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;')
+}
+
+function isTlsHostMismatchError(error: unknown) {
+    const mailError = error as MailError | null
+    const reason = typeof mailError?.reason === 'string' ? mailError.reason.toLowerCase() : ''
+
+    return mailError?.code === 'ESOCKET' && reason.includes("not in the cert's altnames")
 }
 
 export async function POST(request: NextRequest) {
@@ -39,7 +52,7 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        const host = process.env.SMTP_HOST?.trim() || 'smtp.stackmail.com'
+        const host = process.env.SMTP_HOST?.trim() || defaultSmtpHost
         const port = Number(process.env.SMTP_PORT || 465)
         const isSecure = port === 465
         const smtpUser = process.env.SMTP_USER?.trim()
@@ -62,15 +75,16 @@ export async function POST(request: NextRequest) {
         const safeService = escapeHtml(service || 'Not specified')
         const safeMessageHtml = escapeHtml(message).replace(/\n/g, '<br>')
 
-        const transporter = nodemailer.createTransport({
-            host,
-            port,
-            secure: isSecure,
-            auth: {
-                user: smtpUser,
-                pass: smtpPass,
-            },
-        })
+        const createTransport = (smtpHost: string) =>
+            nodemailer.createTransport({
+                host: smtpHost,
+                port,
+                secure: isSecure,
+                auth: {
+                    user: smtpUser,
+                    pass: smtpPass,
+                },
+            })
 
         const mailOptions = {
             from: `"MSB Website" <${smtpUser}>`,
@@ -163,7 +177,18 @@ ${message}
             `,
         }
 
-        await transporter.sendMail(mailOptions)
+        try {
+            await createTransport(host).sendMail(mailOptions)
+        } catch (error: unknown) {
+            if (host !== defaultSmtpHost && isTlsHostMismatchError(error)) {
+                console.warn(
+                    `SMTP certificate mismatch for "${host}". Retrying with "${defaultSmtpHost}".`
+                )
+                await createTransport(defaultSmtpHost).sendMail(mailOptions)
+            } else {
+                throw error
+            }
+        }
 
         return NextResponse.json(
             { success: true, message: 'Form submitted successfully' },
