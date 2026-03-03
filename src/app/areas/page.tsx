@@ -38,7 +38,9 @@ export default function AreasPage() {
                                 Where we work
                             </h2>
                             <p className="text-neutral-600 mb-8">
-                                We&apos;re based in {siteConfig.baseLocation} and regularly work across Kent and East Sussex. Our typical travel radius covers about 30 miles, but we&apos;re flexible for the right job.
+                                {"We're based in "}
+                                {siteConfig.baseLocation}
+                                {" and regularly work across Kent and East Sussex. Our typical travel radius covers about 30 miles, but we're flexible for the right job."}
                             </p>
 
                             <div className="grid grid-cols-2 gap-4 mb-8">
@@ -58,7 +60,7 @@ export default function AreasPage() {
                             <div className="bg-brand-cream rounded-2xl p-6">
                                 <h3 className="font-semibold text-neutral-900 mb-2">Not listed?</h3>
                                 <p className="text-neutral-600 mb-4">
-                                    We cover more areas than we can list. If you&apos;re nearby, get in touch and we&apos;ll let you know if we can help.
+                                    {"We cover more areas than we can list. If you're nearby, get in touch and we'll let you know if we can help."}
                                 </p>
                                 <Button href="/contact">
                                     {siteConfig.primaryCtaLabel}

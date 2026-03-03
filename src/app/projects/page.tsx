@@ -58,7 +58,7 @@ const projects = [
         location: 'Maidstone',
         service: 'Plastering',
         image: '/images/120832834_2710376399289304_1614704455301870631_n.jpg',
-        description: 'Localized repairs and skim finishing to leave walls ready for painting.',
+        description: 'Localised repairs and skim finishing to leave walls ready for painting.',
     },
 ]
 

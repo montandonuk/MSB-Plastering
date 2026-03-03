@@ -102,7 +102,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <Container>
                     <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
                         <div>
-                            <h2 className="mb-4 text-2xl font-bold text-neutral-900 md:text-3xl">What&apos;s included</h2>
+                            <h2 className="mb-4 text-2xl font-bold text-neutral-900 md:text-3xl">{"What's included"}</h2>
                             <p className="mb-8 text-neutral-600">{service.fullDesc}</p>
 
                             <h3 className="mb-3 text-lg font-semibold text-neutral-900">Typical jobs</h3>
@@ -143,7 +143,7 @@ export default async function ServiceDetailPage({ params }: Props) {
 
                             <div className="mt-8 rounded-xl bg-white p-5">
                                 <p className="mb-4 text-sm text-neutral-700">
-                                    Need a quote for {service.title.toLowerCase()}? We&apos;ll provide clear pricing and timeline details.
+                                    {`Need a quote for ${service.title.toLowerCase()}? We'll provide clear pricing and timeline details.`}
                                 </p>
                                 <div className="flex flex-col gap-3">
                                     <Button href="/contact" className="justify-center">

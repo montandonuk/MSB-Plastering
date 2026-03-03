@@ -44,7 +44,7 @@ export default function ReviewsPage() {
                                 </div>
 
                                 <blockquote className="text-neutral-700 mb-4">
-                                    &ldquo;{testimonial.quote}&rdquo;
+                                    {`"${testimonial.quote}"`}
                                 </blockquote>
 
                                 <footer className="border-t border-neutral-100 pt-4">

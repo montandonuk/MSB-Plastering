@@ -49,7 +49,7 @@ export default function ContactForm() {
                 </svg>
                 <h3 className="text-lg font-semibold text-green-900 mb-2">Message sent!</h3>
                 <p className="text-green-700">
-                    Thanks for getting in touch. We&apos;ll get back to you as soon as we can.
+                    {"Thanks for getting in touch. We'll get back to you as soon as we can."}
                 </p>
             </div>
         )

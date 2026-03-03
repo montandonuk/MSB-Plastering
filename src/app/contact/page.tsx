@@ -21,7 +21,7 @@ export default function ContactPage() {
                             Get in touch
                         </h1>
                         <p className="text-xl text-neutral-300">
-                            Tell us about your project and we&apos;ll get back to you with a clear quote.
+                            {"Tell us about your project and we'll get back to you with a clear quote."}
                         </p>
                     </div>
                 </Container>

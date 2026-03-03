@@ -11,7 +11,7 @@ export default function CtaBanner() {
                         Want a free, no-obligation quote?
                     </h3>
                     <p className="text-white/90 text-lg max-w-2xl mx-auto mb-8">
-                        Tell us what you need and we&apos;ll come back with a clear price and timeline. No pressure, no waffle.
+                        {"Tell us what you need and we'll come back with a clear price and timeline. No pressure, no waffle."}
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Button href="/contact" variant="secondary" size="lg">

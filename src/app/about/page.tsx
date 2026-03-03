@@ -38,12 +38,18 @@ export default function AboutPage() {
                             <h2 className="text-3xl font-bold text-neutral-900 mb-6">
                                 Straightforward plastering and decorating
                             </h2>
+                            <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-brand-orange/10 px-4 py-2 text-sm font-semibold text-brand-orange">
+                                <span className="inline-block h-2 w-2 rounded-full bg-brand-orange" aria-hidden="true" />
+                                Over 30+ years of plastering experience
+                            </div>
                             <div className="space-y-4 text-neutral-600">
                                 <p>
-                                    We&apos;re a plastering and decorating service based in {siteConfig.baseLocation}, covering Kent and parts of East Sussex. We handle everything from small patch repairs to full house renovations.
+                                    {"We're a plastering and decorating service based in "}
+                                    {siteConfig.baseLocation}
+                                    {", covering Kent and parts of East Sussex. We handle everything from small patch repairs to full house renovations."}
                                 </p>
                                 <p>
-                                    Our approach is simple: quote fairly, turn up when we say we will, work tidily, and leave you with a result you&apos;re happy with. No jargon, no surprises.
+                                    {"Our approach is simple: quote fairly, turn up when we say we will, work tidily, and leave you with a result you're happy with. No jargon, no surprises."}
                                 </p>
                                 <p>
                                     Whether you need a single room skimmed or a complete property renovated, we bring the same level of care to every job.
@@ -74,12 +80,12 @@ export default function AboutPage() {
                             {
                                 step: '1',
                                 title: 'Get in touch',
-                                description: 'Tell us what you need. We&apos;ll ask a few questions and arrange a time to visit.',
+                                description: "Tell us what you need. We'll ask a few questions and arrange a time to visit.",
                             },
                             {
                                 step: '2',
                                 title: 'Clear quote',
-                                description: 'We&apos;ll give you a written quote with no surprises. You&apos;ll know exactly what&apos;s included.',
+                                description: "We'll give you a written quote with no surprises. You'll know exactly what's included.",
                             },
                             {
                                 step: '3',

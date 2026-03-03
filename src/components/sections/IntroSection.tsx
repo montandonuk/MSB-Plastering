@@ -54,9 +54,13 @@ export default function IntroSection() {
                         <h2 className="mb-5 text-2xl font-bold text-neutral-900 md:mb-6 md:text-4xl">
                             Professional plasterers in {siteConfig.baseLocation}
                         </h2>
+                        <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-brand-orange/10 px-4 py-2 text-sm font-semibold text-brand-orange">
+                            <span className="inline-block h-2 w-2 rounded-full bg-brand-orange" aria-hidden="true" />
+                            Over 30+ years of plastering experience
+                        </div>
                         <div className="space-y-4 text-neutral-600 mb-8">
                             <p>
-                                MSB Plastering & Decorating Service handles the messy bits and the finishing touches. Whether it&apos;s a single room re-skim or a full house renovation, we deliver smooth, lasting results without the stress.
+                                {"MSB Plastering & Decorating Service handles the messy bits and the finishing touches. Whether it's a single room re-skim or a full house renovation, we deliver smooth, lasting results without the stress."}
                             </p>
                             <p>
                                 Based in {siteConfig.baseLocation}, we work across Kent and Sussex. We keep things simple: fair quotes, clear timelines, and tidy work. No surprises.

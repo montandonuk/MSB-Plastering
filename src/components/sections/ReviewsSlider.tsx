@@ -46,7 +46,7 @@ export default function ReviewsSlider() {
 
                         <blockquote className="text-center">
                             <p className="mb-8 text-lg leading-relaxed text-neutral-800 md:text-2xl">
-                                &ldquo;{testimonials[currentIndex].quote}&rdquo;
+                                {`"${testimonials[currentIndex].quote}"`}
                             </p>
                             <footer>
                                 <p className="font-semibold text-neutral-900">

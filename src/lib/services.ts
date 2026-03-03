@@ -83,7 +83,7 @@ const serviceFields: Record<ServiceSlug, ServiceFields> = {
     },
     ceilings: {
         intro: 'Ceiling repairs and re-skims for smooth, modern finishes.',
-        fullDesc: 'From cracked ceilings to dated textured coatings, we repair and re-skim ceilings so they are flat, clean, and ready to decorate. We also address localized water damage repairs.',
+        fullDesc: 'From cracked ceilings to dated textured coatings, we repair and re-skim ceilings so they are flat, clean, and ready to decorate. We also address localised water damage repairs.',
         seoTitle: 'Ceiling Repairs & Re-skimming in Kent | MSB Plastering',
         seoDescription: 'Ceiling repair and re-skimming services in Tunbridge Wells, Kent, and East Sussex. Artex over-skims, crack repairs, and water-damage restoration.',
         keywords: ['ceiling repair kent', 'artex skim over', 'ceiling plastering tunbridge wells', 'ceiling crack repair'],
@@ -109,11 +109,11 @@ const serviceFields: Record<ServiceSlug, ServiceFields> = {
     },
     'external-painting': {
         intro: 'High-quality exterior masonry painting to protect and beautify your home.',
-        fullDesc: 'Protect your property from the elements with professional exterior painting. We use premium masonry paints and proper preparation techniques to ensure a long-lasting, weather-resistant finish that boosts curb appeal.',
+        fullDesc: 'Protect your property from the elements with professional exterior painting. We use premium masonry paints and proper preparation techniques to ensure a long-lasting, weather-resistant finish that boosts kerb appeal.',
         seoTitle: 'External Painting in Kent | MSB Plastering',
         seoDescription: 'Professional exterior painting and masonry protection in Tunbridge Wells, Kent, and East Sussex. Long-lasting finishes for homes and businesses.',
         keywords: ['exterior painting kent', 'masonry painting tunbridge wells', 'house painting service', 'weatherproof wall paint'],
-        forWho: ['Homeowners wanting curb appeal', 'Landlords maintaining exteriors', 'Properties with weather-worn walls'],
+        forWho: ['Homeowners wanting kerb appeal', 'Landlords maintaining exteriors', 'Properties with weather-worn walls'],
         typical: ['Full exterior painting', 'Masonry painting', 'Window sills and reveals', 'Fence and gate painting'],
         faq: [
             { q: 'Do I need scaffolding?', a: 'For higher levels, yes. We can arrange this or work with your preferred scaffolders.' },

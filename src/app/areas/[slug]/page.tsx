@@ -152,7 +152,7 @@ export default async function LocationPage({ params }: Props) {
                                     href={`/services/${service.slug}`}
                                     className="text-sm font-medium text-brand-orange hover:underline"
                                 >
-                                    Learn more &rarr;
+                                    Learn more {'->'}
                                 </Link>
                             </div>
                         ))}

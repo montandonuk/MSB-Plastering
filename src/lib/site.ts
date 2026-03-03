@@ -77,7 +77,7 @@ export const siteConfig = {
         {
             title: "External Painting",
             slug: "external-painting",
-            shortDesc: "Refresh your property's exterior. High-quality masonry painting for protection and curb appeal.",
+            shortDesc: "Refresh your property's exterior. High-quality masonry painting for protection and kerb appeal.",
             icon: "roller",
         },
         {

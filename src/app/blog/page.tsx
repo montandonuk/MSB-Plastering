@@ -44,7 +44,7 @@ export default function BlogPage() {
                             Coming soon
                         </h2>
                         <p className="text-neutral-600 mb-8">
-                            We&apos;re working on helpful guides and tips about plastering, decorating, and home improvement. Check back soon!
+                            {"We're working on helpful guides and tips about plastering, decorating, and home improvement. Check back soon!"}
                         </p>
                         <Button href="/contact">
                             {siteConfig.primaryCtaLabel}
